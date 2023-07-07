@@ -93,14 +93,6 @@
 
         </nav>
         <main>
-      
-            <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-
-        <?php foreach ($artistnames as $name): ?>
-           <? var_dump($name) ?>;
-
-            <?php endforeach?>
-            </div>
         </main>
     </div>
 
@@ -108,4 +100,3 @@
 </body>
 
 </html>
-<?php  require "views/partial/footer.php"?>

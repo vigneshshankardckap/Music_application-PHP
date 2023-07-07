@@ -7,16 +7,16 @@ class Controller {
     public function __construct() {
         $this->Model = new Model();
     }
-
-    public function homepage(){
-        require "views/home.php";
-
-    }
+    
 
     public function logout(){
         session_destroy();
         $this->homepage();
 
+    }
+
+    public function homepage(){
+        require "views/home.php";
     }
 
 
@@ -25,7 +25,8 @@ class Controller {
            $checked= $this->Model->registration($data);
            if ($checked){
                $_SESSION['name']=$checked->username;
-               $this->home();
+               $this->homepage();
+              
            }
            else{
                $session['error']='user is not existed';
@@ -53,10 +54,11 @@ class Controller {
     }
 
 
-    public function addArtist($artist,$img){
-        if ($artist and $img){
-            $this->Model->addArtist($artist,$img);
+    public function addArtist($artist,$image){
+        if ($artist and $image){
+            $this->Model->addArtist($artist,$image);
             $this->homepage();
+
         }
         else{
             require "views/addartist.php";
