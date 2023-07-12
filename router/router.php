@@ -55,30 +55,29 @@ class router
             if ($router['uri']==$_SERVER['REQUEST_URI']){
                 if ($router['action']) {
                     switch ($router['action']) {
+                        
                         case'login':
-
                             $this->controller->loginPage($_POST);
                             break;
-                        case'logout':
 
+                        case'logout':
                             $this->controller->logout();
                             break;
-                        case'addmusic':
 
+                        case'addmusic':
                             $this->controller->addMusic($_POST,$_FILES);
                             break;
 
-                             case'addartist':
-
+                        case'addartist':
                             $this->controller->addArtist($_POST,$_FILES);
                             break;
 
                         default:
-                            $this->controller->homepage();
+                            $this->controller->guestUser();
                     }
 
                 } else {
-                    $this->controller->homepage();
+                    $this->controller->guestUser();
                 }
 
             }

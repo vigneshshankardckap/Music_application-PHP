@@ -2,6 +2,7 @@
 
 class database
 {
+
     public $db;
     public function __construct(){
         try {
@@ -9,7 +10,8 @@ class database
             ("mysql:host=localhost;dbname=music_app",
                 "admin",
                 "welcome");
-        } catch (PDOException $e) {
+        } 
+        catch (PDOException $e) {
             die($e->getMessage());
         }
     }
@@ -17,33 +19,30 @@ class database
 
 class Model extends database{
 
-
+     /**check the  user or adim  */
     public function registration($data){
+
         try {
             $email=$data['email'];
             $password=$data['password'];
             $check=$this->db->query("select * from registration where email_id ='$email' and password ='$password'")->fetch(PDO::FETCH_OBJ);
-                return $check;
-                
+            return $check;
+
         }
         catch (PDOException $e){
             die($e->getMessage());
         }
-
     }
 
-
-
-
-
+       /**insert the artistname and images using try catch  */
     public function addArtist($artist,$image){
         try {
             $artistname =$artist['artistName'];
             $this->db->query("Insert into artist (artist_name,created_at) values ('$artistname',now())");
             $getting_data=$this->db->query("select * from artist order by id desc limit 1");
             $getting_data=  $getting_data->fetch(PDO::FETCH_OBJ);
-            var_dump($getting_data->id);
 
+              /**loop the image insert into db */
             $tasksTotal = count($image['artist']['name']);
             for( $i=0 ; $i < $tasksTotal ; $i++ ) {
                 $newFilePath = "images/artist/".$image['artist']['name'][$i];
@@ -57,18 +56,23 @@ class Model extends database{
             die($e->getMessage());
         }
     }
-
-
-
-
-    function showArtist(){
+ 
+    /**fetch the artist name and show into homepage */
+    public function ArtistName(){
       $artistnames=$this->db->query("select * from artist" )->fetchAll(PDO::FETCH_OBJ);
       return$artistnames;
     }
 
+    /**fetch the artist name and show into homepage */
+    public function albumName(){
+        $songnames=$this->db->query("select * from album" )->fetchAll(PDO::FETCH_OBJ);
+        return$songnames;
+      }
+  
+    /**insert into music name and images  */
     public  function  addMusic($music,$musicImage){
         try {
-            // var_dump($musicImage);
+
             $musicname =$music['musicName'];
             $artistname =$music['artist'];
 
@@ -76,8 +80,8 @@ class Model extends database{
             $getting_data_album=$this->db->query("select * from album order by id desc limit 1");
             $getting_data_album=  $getting_data_album->fetch(PDO::FETCH_OBJ);
 
-            $tasksTotal = count($musicImage['music']['name']);
-            for( $i=0 ; $i < $tasksTotal ; $i++ ) {
+            $totalTask = count($musicImage['music']['name']);
+            for( $i=0 ; $i < $totalTask ; $i++ ) {
                 $newFilePath = "images/music/".$musicImage['music']['name'][$i];
                 $tmpFilePath = $musicImage['music']['tmp_name'][$i];
                 move_uploaded_file($tmpFilePath, $newFilePath);
